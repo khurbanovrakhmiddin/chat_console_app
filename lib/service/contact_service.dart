@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:chat_console_app/model/users_model.dart';
+import 'package:chat_console_app/service/data_service.dart';
 import 'package:chat_console_app/service/ext_service.dart';
 import 'package:chat_console_app/service/io_service.dart';
 import 'package:chat_console_app/service/network_service.dart';
@@ -10,7 +11,7 @@ class ContactService {
   final Directory _directory =
       Directory(Directory.current.path + "/assets/files ");
   late File _file;
-
+final DataService _service = DataService();
   ///Create
   Future<void> init() async {
     bool isDirectoreyCreated = await _directory.exists();
@@ -48,7 +49,7 @@ class ContactService {
 //Read
   Future<String> readContact({required String key}) async {
     await init();
-
+String res = '';
     Map<String, dynamic> dataBase;
     String source = await _file.readAsString();
     if (source.isEmpty) {
@@ -58,10 +59,10 @@ class ContactService {
     }
     dataBase.forEach((keyM, valueM) {
       if (keyM == key) {
-        return valueM;
+        res =valueM;
       }
     });
-    return "";
+    return res;
   }
 
   Future<bool> deleteContact({required String key}) async {
@@ -119,7 +120,7 @@ class ContactService {
     await init();
 
     await _downloadContacts();
-
+ String myID = '';
     Map<String, dynamic> dataBase;
     String source = await _file.readAsString();
     if (source.isEmpty) {
@@ -127,20 +128,27 @@ class ContactService {
     } else {
       dataBase = jsonDecode(source);
     }
+    String id = await _service.readDate(key: "id");
+    if (id != "") {
+      myID = id;
+    }
+
 
      dataBase.forEach((key, value) async{
 
       int colmn = 18 - value[0].toString().length;
       String columnSize = ' ' * colmn;
+if(key != myID){
+  writeln("ID " +
+      key +
+      "   " +
+      "Name - " +
+      value[0] +
+      columnSize +
+      "Phone - " +
+      value[1]);
+}
 
-      writeln("ID " +
-          key +
-          "   " +
-          "Name - " +
-          value[0] +
-          columnSize +
-          "Phone - " +
-          value[1]);
     });
     return dataBase;
   }
@@ -162,11 +170,11 @@ class ContactService {
     List<User> user = NetworkService.parseUsers(data);
 
     Map<String, dynamic> map = {};
-    user.forEach((element) async {
+    for(var element in user){
       map.addAll({
         element.id.toString(): [element.name, element.number]
       });
-    });
+    }
     return map;
   }
 }

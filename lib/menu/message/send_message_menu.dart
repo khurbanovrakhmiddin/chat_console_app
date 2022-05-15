@@ -91,7 +91,9 @@ class ChatMenu extends Menu {
           ///
           for (var element in m) {
             if (element.to == myId) {
-              history.add(element.message);
+              if(element.message != 'off') {
+                history.add(element.message);
+              }
               index.add(element.id);
             }
           }
@@ -156,6 +158,7 @@ class ChatMenu extends Menu {
         if (msg.toLowerCase() == "off") {
           text1 = "off";
           chatStatus = false;
+          loopStatus = false;
           break;
         }
         text1 += "\n" + msg;

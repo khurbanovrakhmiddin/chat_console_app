@@ -29,9 +29,8 @@ class MyApp {
         }
       }
     }
-    int i = 0;
+
     while (true) {
-      print(i++);
       await menu.build();
     }
   }

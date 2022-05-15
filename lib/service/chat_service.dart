@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-class ChatService {
+
+class ChatService  {
   Directory _directory = Directory(Directory.current.path + "/assets/files ");
   late File _file;
 
