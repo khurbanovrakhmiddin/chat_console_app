@@ -33,7 +33,7 @@ class ChatMenu extends Menu {
     String text1 = '';
     String myId = '';
     String? res;
-
+    int count = 0;
     await _contact.readAllContact();
 
     do {
@@ -111,14 +111,19 @@ class ChatMenu extends Menu {
           while (true) {
 
             await waiting();
-
+            count++;
             List list = jsonDecode(res!);
             List<Message> m = list.map((e) => Message.fromJson(e)).toList();
 
             ///
             for (var element in m) {
               if (element.to == myId) {
-                history.add(element.message);
+                if(element.message != 'off') {
+                  history.add(element.message);
+                }else{
+                  index.add(element.id);
+                  break exit;
+                }
                 index.add(element.id);
               }
             }
@@ -132,6 +137,10 @@ class ChatMenu extends Menu {
             }
             res = await NetworkService.GET(
                 NetworkService.apiMessages, NetworkService.headers);
+
+            if(count == 60){
+              break s;
+            }
           }
         }
       }
