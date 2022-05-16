@@ -79,10 +79,13 @@ class NetworkService {
     }
   }
 
+
+
   static List<User> parseUsers(List res)  {
     List<User> result = res.map((e) => User.fromJson(e)).toList();
     return result;
   }
+
 static  Future <List<Message> >parseMessage(List list)async{
     List<Message> msg = list.map((e) => Message.fromJson(e)).toList();
     return msg;

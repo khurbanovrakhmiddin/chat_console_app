@@ -11,7 +11,8 @@ import '../home_menu.dart';
 
 class Contacts extends Menu {
   static final String id = "/contacts_menu";
-ContactService aw = ContactService();
+  ContactService aw = ContactService();
+
   Future<void> selectMenu(String select) async {
     switch (select) {
       case "I":
@@ -26,12 +27,12 @@ ContactService aw = ContactService();
         break;
       case "III":
         {
-           await Navigator.push(ReadAllMenu());
+          await Navigator.push(ReadAllMenu());
         }
         break;
       case "IV":
         {
-        await  Navigator.pushReplacementNamed(HomeMenu.id);
+          await Navigator.pushReplacementNamed(HomeMenu.id);
         }
         break;
       default:

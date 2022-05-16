@@ -79,7 +79,7 @@ class ChatMenu extends Menu {
 
     writeln("instruction".tr);
 
-    do {
+   exit:do {
       res = await NetworkService.GET(
           NetworkService.apiMessages, NetworkService.headers);
 
@@ -93,6 +93,9 @@ class ChatMenu extends Menu {
             if (element.to == myId) {
               if(element.message != 'off') {
                 history.add(element.message);
+              }else{
+                index.add(element.id);
+             break exit;
               }
               index.add(element.id);
             }
@@ -144,7 +147,7 @@ class ChatMenu extends Menu {
       while (true) {
         msg = read();
 
-        if (msg == "check") {
+        if (msg.toLowerCase() == "check") {
           statusMessage = false;
           loopStatus = false;
           break;
