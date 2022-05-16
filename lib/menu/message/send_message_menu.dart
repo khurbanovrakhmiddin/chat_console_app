@@ -164,8 +164,11 @@ class ChatMenu extends Menu {
           loopStatus = false;
           break;
         }
-        text1 += "\n" + msg;
-        text2 += "\n\t\t\t\t\t\t\t\t" + msg;
+        if(msg != ''){
+          text1 += "\n" + msg;
+          text2 += "\n\t\t\t\t\t\t\t\t" + msg;
+        }
+
         msg = '';
       }
 
